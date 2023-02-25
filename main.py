@@ -20,8 +20,10 @@ class MediumScraper:
         self.driver = None
 
     def start(self):
+        global flag
         self.driver = webdriver.Chrome(self.driver_path)
         self.driver.get(f"https://medium.com/search?q={self.search_query}")
+        flag = True
 
     def scrape(self):
         if not self.driver:
@@ -74,27 +76,39 @@ class MediumScraper:
         # Create a string with HTML tags to format the article text
         # formatted_text = f"<h1>{tag}</h1>\n<p>{art}</p>"
 
-        return art
+
 
     def stop(self):
         if self.driver:
             self.driver.quit()
             self.driver = None
         print("Test completed.")
-flag = False
+
+
+is_flag_set = False
+
+def set_flag():
+    global is_flag_set
+    is_flag_set = True
 
 @app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/search')
 def search():
-    if flag:
-        query = request.form.get('query')
+    query = request.args.get('query')
+    if query:
+        set_flag()  # Set the flag if a search query was submitted
         scraper = MediumScraper("chromedriver", query)
         scraper.start()
         scraper.scrape()
         article = scraper.soup()
         scraper.stop()
-        return render_template('search.html', article=article)
+        return render_template('index.html', article=article)
     else:
         return render_template('index.html')
+
 
 if __name__ == "__main__":
     app.run(debug=False, host='0.0.0.0')
