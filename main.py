@@ -81,21 +81,20 @@ class MediumScraper:
             self.driver.quit()
             self.driver = None
         print("Test completed.")
+flag = False
 
 @app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/search')
 def search():
-    query = request.args.get('query')
-    scraper = MediumScraper("chromedriver", query)
-    scraper.start()
-    scraper.scrape()
-    article = scraper.soup()
-    scraper.stop()
-
-    return render_template('templates/search.html', article=article)
+    if flag:
+        query = request.form.get('query')
+        scraper = MediumScraper("chromedriver", query)
+        scraper.start()
+        scraper.scrape()
+        article = scraper.soup()
+        scraper.stop()
+        return render_template('search.html', article=article)
+    else:
+        return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=False, host='0.0.0.0')
