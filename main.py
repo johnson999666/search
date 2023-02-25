@@ -1,7 +1,7 @@
-
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import WebDriverException
 from bs4 import BeautifulSoup
@@ -13,6 +13,8 @@ import textwrap
 
 app = Flask(__name__)
 
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run Chrome in headless mode
 
 
 class MediumScraper:
@@ -23,7 +25,7 @@ class MediumScraper:
 
     def start(self):
         global flag
-        self.driver = webdriver.Chrome(self.driver_path)
+        self.driver = webdriver.Chrome(self.driver_path, options=chrome_options)
         self.driver.get(f"https://medium.com/search?q={self.search_query}")
         flag = True
 
@@ -78,8 +80,6 @@ class MediumScraper:
         # Create a string with HTML tags to format the article text
         # formatted_text = f"<h1>{tag}</h1>\n<p>{art}</p>"
 
-
-
     def stop(self):
         if self.driver:
             self.driver.quit()
@@ -93,9 +93,6 @@ def set_flag():
     global is_flag_set
     is_flag_set = True
 
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
 
 @app.route('/')
 def search():
