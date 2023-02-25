@@ -11,7 +11,7 @@ import re
 from flask import Flask, render_template, request, redirect, url_for
 import textwrap
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")  # Run Chrome in headless mode
@@ -94,7 +94,7 @@ def set_flag():
     is_flag_set = True
 
 
-@app.route('/')
+@application.route('/')
 def search():
     query = request.args.get('query')
     if query:
@@ -110,4 +110,4 @@ def search():
 
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0')
+    application.run(debug=False, host='0.0.0.0')
