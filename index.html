@@ -6,6 +6,7 @@
 		body {
 			margin: 0;
 			padding: 0;
+			background-color: pink;
 		}
 
 		.container {
@@ -67,10 +68,24 @@
 		<div class="left-div">
 
 
-				<form class="search-bar" action="{{ url_for('search') }}" method="GET">
-    <input type="text" name="query" placeholder="Article Search...">
-    <button type="submit">Search</button>
-				</form>
+				<form class="search-bar" action="{{ url_for('search') }}" method="GET" id="search-form">
+  <input type="text" name="query" placeholder="Article Search...">
+  <button id="search-button" type="submit">Search</button>
+</form>
+
+<script>
+  <script>
+  document.getElementById("search-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission behavior
+    set_flag(); // Call the set_flag() function
+  });
+</script>
+
+</script>
+
+
+
+
 
 
 
@@ -86,5 +101,6 @@
 			</p>
 		</div>
 	</div>
+
 </body>
 </html>
