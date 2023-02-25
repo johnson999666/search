@@ -86,7 +86,7 @@ class MediumScraper:
 def index():
     return render_template('index.html')
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search')
 def search():
     query = request.args.get('query')
     scraper = MediumScraper("chromedriver", query)
