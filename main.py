@@ -13,6 +13,8 @@ import textwrap
 
 app = Flask(__name__)
 
+
+
 class MediumScraper:
     def __init__(self, driver_path, search_query):
         self.driver_path = driver_path
@@ -91,9 +93,9 @@ def set_flag():
     global is_flag_set
     is_flag_set = True
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
 
 @app.route('/')
 def search():
