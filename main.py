@@ -95,7 +95,7 @@ def set_flag():
 def index():
     return render_template('index.html')
 
-@app.route('/search')
+@app.route('/')
 def search():
     query = request.args.get('query')
     if query:
